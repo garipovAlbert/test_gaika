@@ -7,7 +7,6 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Pages';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-index">
 

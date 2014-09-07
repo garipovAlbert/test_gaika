@@ -23,8 +23,7 @@ use yii\db\ActiveRecord;
  */
 class TvTextBehavior extends Behavior
 {
-
-	private $_oldData;
+	
 	private $_data;
 
 	/**
@@ -69,7 +68,7 @@ class TvTextBehavior extends Behavior
 	{
 		// $this->_data имеет значение только в случае обращения к особому полю,
 		// если обращений не было, то не производим никаких действий.
-		if ($this->_data === null) {
+		if ($this->_data !== null) {
 			$data = $this->_loadData();
 			foreach ($this->_data as $name => $value) {
 				if (array_key_exists($name, $data)) {
@@ -119,7 +118,7 @@ class TvTextBehavior extends Behavior
 	{
 		if (in_array($name, $this->extraFields)) {
 			if ($this->_data === null) {
-				$this->_data = $this->_oldData = $this->_loadData();
+				$this->_data = $this->_loadData();
 			}
 			return $this->_data[$name] = $value;
 		} else {

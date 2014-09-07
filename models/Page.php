@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use app\components\TvTextBehavior;
 
 /**
@@ -32,6 +33,7 @@ class Page extends \yii\db\ActiveRecord
 				'class' => TimestampBehavior::className(),
 				'createdAtAttribute' => 'created',
 				'updatedAtAttribute' => 'updated',
+				'value' => new Expression('NOW()'),
 			],
 			[
 				'class' => TvTextBehavior::className(),
