@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use app\components\TvTextBehavior;
 
 /**
  * This is the model class for table "page".
@@ -22,48 +24,69 @@ use Yii;
  */
 class Page extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'page';
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['alias', 'template', 'title', 'description', 'keywords', 'text', 'created', 'updated'], 'required'],
-            [['text'], 'string'],
-            [['status'], 'integer'],
-            [['created', 'updated'], 'safe'],
-            [['alias', 'title', 'h1', 'description', 'keywords'], 'string', 'max' => 255],
-            [['template'], 'string', 'max' => 11],
-            [['lang'], 'string', 'max' => 3]
-        ];
-    }
+	public function behaviors()
+	{
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'createdAtAttribute' => 'created',
+				'updatedAtAttribute' => 'updated',
+			],
+			[
+				'class' => TvTextBehavior::className(),
+				'extraFields' => ['phone', 'address'],
+			],
+		];
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'alias' => 'Alias',
-            'template' => 'Template',
-            'lang' => 'Lang',
-            'title' => 'Title',
-            'h1' => 'H1',
-            'description' => 'Description',
-            'keywords' => 'Keywords',
-            'text' => 'Text',
-            'status' => 'Status',
-            'created' => 'Created',
-            'updated' => 'Updated',
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'page';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[
+				['alias', 'template', 'title', 'description', 'keywords', 'text', 'phone', 'address'],
+				'required',
+			],
+			[['text'], 'string'],
+			[
+				['alias', 'title', 'h1', 'description', 'keywords', 'phone', 'address'],
+				'string', 'max' => 255,
+			],
+			[['template'], 'string', 'max' => 11],
+			[['lang'], 'string', 'max' => 3],
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'alias' => 'Alias',
+			'template' => 'Template',
+			'lang' => 'Lang',
+			'title' => 'Title',
+			'h1' => 'H1',
+			'description' => 'Description',
+			'keywords' => 'Keywords',
+			'text' => 'Text',
+			'status' => 'Status',
+			'created' => 'Created',
+			'updated' => 'Updated',
+		];
+	}
+
 }
